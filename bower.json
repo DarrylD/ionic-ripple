@@ -1,0 +1,26 @@
+{
+    "name": "ionic-ripple",
+    "version": "0.0.8",
+    "homepage": "http://github.com/darryld/ionic-ripple",
+    "authors": [
+        "Darryl D."
+    ],
+    "description": "Simple way to add material design ripple effect to elements.",
+    "main": "ionic-ripple.js",
+    "dependencies": {
+        "angular": "^1.2.0"
+    },
+    "keywords": [
+        "ionic",
+        "angularjs",
+        "angular",
+        "ripple",
+        "google",
+        "material"
+    ],
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules"
+    ]
+}

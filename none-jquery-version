@@ -1,0 +1,112 @@
+/**
+ * ionic-ripple v0.0.4 - Simple way to add material design ripple effect to elements.
+ * Copyright (c) 2015 Darryl D. - http://github.com/darryld/ionic-ripple
+ * License: MIT
+ */
+
+(function(window, angular, undefined) {
+    'use strict';
+
+    if(!angular) {
+        return;
+    }
+
+    var mod = angular.module('ionicRipple', []);
+
+    mod.directive('ripple', function() {
+        return {
+            restrict: 'A',
+            //   scope:{
+            //     dark: '^rippleDark'
+            //   },
+            link: function (scope, element, attrs) {
+
+                element.on('click',function(e){
+
+                    var ripple,body,docEl,
+                        scrollTop,scrollLeft,clientTop,
+                        clientLeft,rippleLeft,rippleTop,
+                        rippleBox,size,eventType,
+                        x,y;
+
+                    eventType = e.type;
+                    ripple = this.querySelector(".rip");
+
+                    //if we have a ripple element from a previous click, we'll just use that
+                    if(ripple === null){
+
+                        //if we're adding this to an item, the ripple element needs to
+                        //be inside the anchor inside the ion-item directive
+                        ripple = document.createElement("span");
+                        ripple.className = "rip";
+
+                        if(this.tagName === 'ION-ITEM') {
+
+                            var anchorElement = this.querySelector('a');
+                            anchorElement.insertBefore(ripple, this.firstChild);
+
+                        } else {
+
+                            this.insertBefore(ripple, this.firstChild);
+
+                        }
+
+                    }
+
+                    ripple.classList.remove("animate-ripple");
+
+                    if (!ripple.offsetHeight && !ripple.offsetWidth) {
+
+                        size = Math.max(e.target.offsetWidth, e.target.offsetHeight);
+
+                        ripple.style.width = size + 'px';
+                        ripple.style.height = size + 'px';
+
+                    }
+
+                    rippleBox = this.getBoundingClientRect();
+
+                    body = document.body;
+                    docEl = document.documentElement;
+
+                    scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+                    scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+                    clientTop = docEl.clientTop || body.clientTop || 0;
+                    clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+                    rippleTop  = rippleBox.top +  scrollTop - clientTop;
+                    rippleLeft = rippleBox.left + scrollLeft - clientLeft;
+
+                    if (eventType === 'click') {
+
+                        x = e.pageX;
+                        y = e.pageY;
+
+                    } else if(eventType === 'touchstart') {
+
+                        x = e.changedTouches[0].pageX;
+                        y = e.changedTouches[0].pageY;
+
+                    }
+
+                    x = (x - rippleLeft) - ripple.offsetWidth / 2;
+                    y = (y - rippleTop) - ripple.offsetHeight / 2;
+
+                    if( attrs.hasOwnProperty('rippleDark') ) {
+
+                        ripple.style.background = 'rgba(0, 0, 0, 0.3)';
+
+                    }
+
+                    ripple.style.top = y +'px';
+                    ripple.style.left = x +'px';
+
+                    ripple.classList.add("animate-ripple");
+
+                });
+            }
+        };
+    });
+
+})(window, window.angular);

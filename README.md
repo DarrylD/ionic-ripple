@@ -37,7 +37,13 @@ Then add the `ripple` attribute to elements (make sure the elements have color s
 
   ```
 
-Or if you want a dark ripple...
+In order to trigger the ripple on a long-press (ie. tap hold) event
+  ```html
+  <button ripple-hold class="button button-positive">OMG a long-pressed ripply button!</button>
+
+  ```
+
+If you want a dark ripple...
 
   ```html
   <button ripple ripple-dark class="button button-positive">OMG a ripply button with a white background!</button>
